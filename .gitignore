@@ -1,23 +1,32 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# ========================
+# FRONTEND (React)
+# ========================
+/squid-game-frontend/node_modules
+/squid-game-frontend/.pnp
+/squid-game-frontend/pnp.js
+/squid-game-frontend/coverage
+/squid-game-frontend/build
+/squid-game-frontend/.DS_Store
+/squid-game-frontend/.env.local
+/squid-game-frontend/.env.development.local
+/squid-game-frontend/.env.test.local
+/squid-game-frontend/.env.production.local
+/squid-game-frontend/npm-debug.log*
+/squid-game-frontend/yarn-debug.log*
+/squid-game-frontend/yarn-error.log*
 
-# testing
-/coverage
+# ========================
+# BACKEND (Node/Express)
+# ========================
+/squid-game-backend/node_modules
+/squid-game-backend/.env
+/squid-game-backend/.DS_Store
+/squid-game-backend/npm-debug.log*
+/squid-game-backend/yarn-debug.log*
+/squid-game-backend/yarn-error.log*
 
-# production
-/build
-
-# misc
+# OS junk files
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+Thumbs.db
