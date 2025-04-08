@@ -14,6 +14,7 @@ export default function HomePage() {
     };
 
     return (
+        // Front page logo
         <div
             className="w-full h-screen bg-cover bg-center flex flex-col items-center justify-center text-white relative"
             style={{ backgroundImage: `url(${homepageBg2})` }}
