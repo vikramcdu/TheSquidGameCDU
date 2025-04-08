@@ -27,7 +27,7 @@ export default function HomePage() {
                     alt="Squid Game Logo"
                     className="w-72 md:w-[600px] mb-8 drop-shadow-lg"
                 />
-
+                {/* Single Player and Multi player button */}
                 <div className="mb-6 flex gap-4 justify-center">
                     <button
                         className={`px-20 py-6 rounded-lg font-bold text-white transition-transform duration-200 transform hover:scale-105 shadow-md ${mode === 'Single Player'
