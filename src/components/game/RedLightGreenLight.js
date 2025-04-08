@@ -1,9 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import dollFront from '../../assets/images/DollFaceFront.png';
+import dollBack from '../../assets/images/DollFaceBack.png';
+import { Canvas } from '@react-three/fiber';
+import Doll3D from './Doll3D';
+import RGLightBgrd from '../../assets/images/NewBackground.png'
 
 export default function RedLightGreenLight() {
   const [light, setLight] = useState('green');
   const [position, setPosition] = useState(0);
+  const [facingFront, setFacingFront] = useState(true);
   const gameInterval = useRef(null);
   const navigate = useNavigate();
   const [showConfirm, setShowConfirm] = useState(false);
@@ -12,7 +18,11 @@ export default function RedLightGreenLight() {
   const startLightInterval = () => {
     if (gameInterval.current) clearInterval(gameInterval.current);
     gameInterval.current = setInterval(() => {
-      setLight((prev) => (prev === 'green' ? 'red' : 'green'));
+      setLight((prev) => {
+        const newLight = prev === 'green' ? 'red' : 'green';
+        setFacingFront(newLight === 'green');
+        return newLight;
+      });
     }, 3000);
   };
 
@@ -34,6 +44,7 @@ export default function RedLightGreenLight() {
     setPosition(0);
     setIsEliminated(false);
     setLight('green');
+    setFacingFront(true);
     startLightInterval();
   };
 
@@ -50,11 +61,26 @@ export default function RedLightGreenLight() {
       </div>
 
       {/* Game Environment */}
-      <div className="relative w-full h-screen bg-gradient-to-b from-yellow-100 to-green-200 overflow-hidden">
+      <div
+        className="relative w-full h-screen bg-cover bg-center overflow-hidden"
+        style={{ backgroundImage: `url(${RGLightBgrd})` }}
+      >
         {/* Red/Green Light Doll */}
         <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center">
-          <div className={`w-24 h-24 rounded-full ${light === 'green' ? 'bg-green-500' : 'bg-red-500'} shadow-lg`}></div>
-          <p className="mt-2 text-xl font-bold text-gray-800 capitalize">{light} Light</p>
+          {/* // 3D Canvas */}
+          <div className="w-full h-[500px]">
+            <Canvas camera={{ position: [0, 1, 6], fov: 45 }}>
+              <ambientLight />
+              <directionalLight position={[2, 5, 2]} />
+              <Doll3D isGreenLight={light === 'red'} />
+            </Canvas>
+          </div>
+          {/* <img
+            src={light === 'green' ? dollFront : dollBack}
+            className="transition-transform duration-700 w-40"
+            style={{ transform: `rotateY(${light === 'green' ? 0 : 180}deg)` }}
+          />
+          <p className="mt-2 text-xl font-bold text-gray-800 capitalize">{light} Light</p> */}
         </div>
 
         {/* Track with grass/ground style */}
@@ -76,11 +102,9 @@ export default function RedLightGreenLight() {
           <button
             onClick={handleMoveForward}
             disabled={isEliminated || position >= 100}
-            className={`px-6 py-3 rounded-lg font-bold text-white text-lg ${
-              light === 'green' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600'
-            } ${
-              isEliminated || position >= 100 ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'
-            } transition`}
+            className={`px-6 py-3 rounded-lg font-bold text-white text-lg ${light === 'green' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600'
+              } ${isEliminated || position >= 100 ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'
+              } transition`}
           >
             Move Forward
           </button>
