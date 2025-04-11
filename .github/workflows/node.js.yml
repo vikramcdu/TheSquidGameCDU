@@ -23,15 +23,13 @@ jobs:
           cache-dependency-path: squid-game-frontend/package-lock.json
 
       - name: Install dependencies
-        working-directory: ./squid-game-frontend
         run: npm install
 
       - name: Build React app
-        working-directory: ./squid-game-frontend
         run: npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./squid-game-frontend/build
+          publish_dir: ./build
