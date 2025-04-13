@@ -2,7 +2,7 @@
   "name": "squid-game-frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://vikramcdu.github.io/",
+  "homepage": "https://vikramcdu.github.io/TheSquidGameCDU/",
   "dependencies": {
     "@react-three/drei": "^10.0.6",
     "@react-three/fiber": "^9.1.2",
