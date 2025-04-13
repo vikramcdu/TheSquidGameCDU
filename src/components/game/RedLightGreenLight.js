@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import Doll3D from './Doll3D';
 import RGLightBgrd from '../../assets/images/NewBackground.png';
 import './TrafficLight.css';
+import { useGLTF } from '@react-three/drei';
 
 export default function RedLightGreenLight() {
   const [light, setLight] = useState('green');
@@ -19,23 +20,32 @@ export default function RedLightGreenLight() {
   const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
-    const duration = 1500;
-    const interval = 30;
-    const steps = duration / interval;
-    const increment = 100 / steps;
+    // Load background image
+    const img = new Image();
+    img.src = RGLightBgrd;
 
-    const progressInterval = setInterval(() => {
-      setLoadingProgress(prev => {
-        const next = Math.min(prev + increment, 100);
-        if (next >= 100) {
-          clearInterval(progressInterval);
-          setTimeout(() => setIsLoading(false), 500);
-        }
-        return next;
-      });
-    }, interval);
+    img.onload = () => {
+      // Once background is ready, preload 3D model
+      useGLTF.preload('../../assets/models/squid_game_doll.glb');
 
-    return () => clearInterval(progressInterval);
+      const duration = 1500;
+      const interval = 30;
+      const steps = duration / interval;
+      const increment = 100 / steps;
+
+      const progressInterval = setInterval(() => {
+        setLoadingProgress(prev => {
+          const next = Math.min(prev + increment, 100);
+          if (next >= 100) {
+            clearInterval(progressInterval);
+            setTimeout(() => setIsLoading(false), 500);
+          }
+          return next;
+        });
+      }, interval);
+
+      return () => clearInterval(progressInterval);
+    }
   }, []);
 
   const startGame = () => {
@@ -120,7 +130,7 @@ export default function RedLightGreenLight() {
           <h2 className="text-pink-600 text-3xl font-bold mb-6">Red Light Green Light</h2>
           <div className="mb-4">
             <div className="h-2 w-full bg-gray-800 rounded-full overflow-hidden">
-              <div 
+              <div
                 className="h-full bg-pink-600 transition-all duration-300 ease-out"
                 style={{ width: `${loadingProgress}%` }}
               />
@@ -241,7 +251,7 @@ export default function RedLightGreenLight() {
                 Restart Game
               </button>
               <button
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/home')}
                 className="px-6 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg font-bold text-white shadow"
               >
                 Back to Home
