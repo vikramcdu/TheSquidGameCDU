@@ -8,7 +8,7 @@ import { useGLTF } from '@react-three/drei';
 
 export default function RedLightGreenLight() {
   const [light, setLight] = useState('green');
-  const [position, setPosition] = useState(90);
+  const [position, setPosition] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
@@ -51,7 +51,7 @@ export default function RedLightGreenLight() {
 
   const startGame = () => {
     setGameStarted(true);
-    setTimeLeft(5);
+    setTimeLeft(60);
     startLightInterval();
     startTimer();
   };
