@@ -102,6 +102,13 @@ export default function RedLightGreenLight() {
     }
   }, [isTimedOut]);
 
+  useEffect(() => {
+    if(position >= 100) {
+      clearTimeout(gameInterval.current);
+      clearInterval(timerInterval.current);
+    }
+  }, [position]);
+
   const handleMoveForward = () => {
     if (!gameStarted || timeLeft === 0) return;
     if (light === 'green') {
@@ -252,42 +259,24 @@ export default function RedLightGreenLight() {
       {position >= 100 && (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
           <div className="bg-white text-black rounded-lg p-6 w-[300px] shadow-xl text-center space-y-4">
-            <p className="text-lg font-semibold text-red-600">🎉 You Win! 🎉</p>
+            <p className="text-lg font-semibold text-red-600 font-bold">🎉 You Win! 🎉</p>
             <div className="flex justify-around mt-4">
               <button
                 onClick={handleRestart}
-                className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded"
+                className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded font-bold"
               >
                 Restart
               </button>
               <button
                 onClick={() => navigate('/')}
-                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded"
+                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded font-bold"
               >
                 Quit
               </button>
             </div>
           </div>
         </div>
-        // <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 bg-white bg-opacity-90 rounded-lg p-6 text-center space-y-4">
-        //   <p className="text-3xl text-green-600 font-bold">🎉 You Win! 🎉</p>
-        //   <div className="flex gap-4 justify-center">
-        //     <button
-        //       onClick={handleRestart}
-        //       className="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 rounded-lg font-bold text-white shadow"
-        //     >
-        //       Restart Game
-        //     </button>
-        //     <button
-        //       onClick={() => navigate('/home')}
-        //       className="px-6 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg font-bold text-white shadow"
-        //     >
-        //       Back to Home
-        //     </button>
-        //   </div>
-        // </div>
       )}
-
 
       {/* Elimination Popup */}
       {isEliminated && (
