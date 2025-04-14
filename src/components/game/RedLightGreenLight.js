@@ -8,7 +8,7 @@ import { useGLTF } from '@react-three/drei';
 
 export default function RedLightGreenLight() {
   const [light, setLight] = useState('green');
-  const [position, setPosition] = useState(0);
+  const [position, setPosition] = useState(90);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
@@ -18,6 +18,7 @@ export default function RedLightGreenLight() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [isEliminated, setIsEliminated] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const [isTimedOut, setIsTimedOut] = useState(false);
 
   useEffect(() => {
     // Load background image
@@ -50,7 +51,7 @@ export default function RedLightGreenLight() {
 
   const startGame = () => {
     setGameStarted(true);
-    setTimeLeft(60);
+    setTimeLeft(5);
     startLightInterval();
     startTimer();
   };
@@ -61,7 +62,7 @@ export default function RedLightGreenLight() {
       setTimeLeft((prevTime) => {
         if (prevTime <= 1) {
           clearInterval(timerInterval.current);
-          setIsEliminated(true);
+          setIsTimedOut(true);
           return 0;
         }
         return prevTime - 1;
@@ -93,6 +94,13 @@ export default function RedLightGreenLight() {
       startGame();
     }
   }, [isLoading]);
+
+  useEffect(() => {
+    if (isTimedOut) {
+      clearTimeout(gameInterval.current);
+      clearInterval(timerInterval.current);
+    }
+  }, [isTimedOut]);
 
   const handleMoveForward = () => {
     if (!gameStarted || timeLeft === 0) return;
@@ -214,52 +222,72 @@ export default function RedLightGreenLight() {
             Move Forward
           </button>
         </div>
+      </div>
 
-        {/* Game Over Message - Time's Up */}
-        {timeLeft === 0 && !isEliminated && position < 100 && (
-          <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-            <div className="bg-white text-black rounded-lg p-6 w-[300px] shadow-xl text-center space-y-4">
-              <p className="text-lg font-semibold text-red-600">⏰ Time's Up!</p>
-              <p className="text-gray-600">You ran out of time!</p>
-              <div className="flex justify-around mt-4">
-                <button
-                  onClick={handleRestart}
-                  className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded"
-                >
-                  Try Again
-                </button>
-                <button
-                  onClick={() => navigate('/')}
-                  className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded"
-                >
-                  Quit
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Game Win Message */}
-        {position >= 100 && (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 bg-white bg-opacity-90 rounded-lg p-6 text-center space-y-4">
-            <p className="text-3xl text-green-600 font-bold">🎉 You Win! 🎉</p>
-            <div className="flex gap-4 justify-center">
+      {/* Game Over Message - Time's Up */}
+      {timeLeft === 0 && isTimedOut && position < 100 && (
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+          <div className="bg-white text-black rounded-lg p-6 w-[300px] shadow-xl text-center space-y-4">
+            <p className="text-lg font-semibold text-red-600 font-bold">⏰ Time's Up!</p>
+            <p className="text-gray-600 font-bold">You ran out of time!</p>
+            <div className="flex justify-around mt-4">
               <button
                 onClick={handleRestart}
-                className="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 rounded-lg font-bold text-white shadow"
+                className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded font-bold"
               >
-                Restart Game
+                Try Again
               </button>
               <button
-                onClick={() => navigate('/home')}
-                className="px-6 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg font-bold text-white shadow"
+                onClick={() => navigate('/')}
+                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded font-bold"
               >
-                Back to Home
+                Quit
               </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* Game Win Message */}
+      {position >= 100 && (
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+          <div className="bg-white text-black rounded-lg p-6 w-[300px] shadow-xl text-center space-y-4">
+            <p className="text-lg font-semibold text-red-600">🎉 You Win! 🎉</p>
+            <div className="flex justify-around mt-4">
+              <button
+                onClick={handleRestart}
+                className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded"
+              >
+                Restart
+              </button>
+              <button
+                onClick={() => navigate('/')}
+                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded"
+              >
+                Quit
+              </button>
+            </div>
+          </div>
+        </div>
+        // <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 bg-white bg-opacity-90 rounded-lg p-6 text-center space-y-4">
+        //   <p className="text-3xl text-green-600 font-bold">🎉 You Win! 🎉</p>
+        //   <div className="flex gap-4 justify-center">
+        //     <button
+        //       onClick={handleRestart}
+        //       className="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 rounded-lg font-bold text-white shadow"
+        //     >
+        //       Restart Game
+        //     </button>
+        //     <button
+        //       onClick={() => navigate('/home')}
+        //       className="px-6 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg font-bold text-white shadow"
+        //     >
+        //       Back to Home
+        //     </button>
+        //   </div>
+        // </div>
+      )}
+
 
       {/* Elimination Popup */}
       {isEliminated && (
