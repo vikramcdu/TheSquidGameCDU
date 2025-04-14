@@ -7,6 +7,8 @@ export default function HomePage() {
     const [isLoading, setIsLoading] = useState(true);
     const [loadingProgress, setLoadingProgress] = useState(0);
     const navigate = useNavigate();
+    const [showModeWarning, setShowModeWarning] = useState(false);
+
 
     useEffect(() => {
         // Loading animation over 3 seconds
@@ -30,7 +32,11 @@ export default function HomePage() {
     }, []);
 
     const handleStartGame = () => {
-        if (!mode) return alert('Please select a game mode first!');
+        if (!mode) {
+            setShowModeWarning(true);
+            return;
+        }
+
         navigate('/game');
     };
 
@@ -45,7 +51,7 @@ export default function HomePage() {
                     />
                     <div className="mb-4">
                         <div className="h-2 w-full bg-gray-800 rounded-full overflow-hidden">
-                            <div 
+                            <div
                                 className="h-full bg-pink-600 transition-all duration-300 ease-out"
                                 style={{ width: `${loadingProgress}%` }}
                             />
@@ -75,8 +81,8 @@ export default function HomePage() {
                 <div className="mb-6 flex gap-4 justify-center">
                     <button
                         className={`px-20 py-6 rounded-lg font-bold text-white transition-transform duration-200 transform hover:scale-105 shadow-md ${mode === 'Single Player'
-                                ? 'bg-pink-600 shadow-pink-400'
-                                : 'bg-gray-700 hover:bg-gray-600'
+                            ? 'bg-pink-600 shadow-pink-400'
+                            : 'bg-gray-700 hover:bg-gray-600'
                             }`}
                         onClick={() => setMode('Single Player')}
                     >
@@ -84,8 +90,8 @@ export default function HomePage() {
                     </button>
                     <button
                         className={`px-20 py-6 rounded-lg font-bold text-white transition-transform duration-200 transform hover:scale-105 shadow-md ${mode === 'Multi Player'
-                                ? 'bg-pink-600 shadow-pink-400'
-                                : 'bg-gray-700 hover:bg-gray-600'
+                            ? 'bg-pink-600 shadow-pink-400'
+                            : 'bg-gray-700 hover:bg-gray-600'
                             }`}
                         onClick={() => setMode('Multi Player')}
                     >
@@ -100,6 +106,23 @@ export default function HomePage() {
                     Start Game
                 </button>
             </div>
+
+            {showModeWarning && (
+                <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center">
+                    <div className="bg-white rounded-xl shadow-xl p-6 w-[300px] text-center">
+                        <p className="text-lg font-bold text-red-600 mb-4">
+                            Please select a game mode!
+                        </p>
+                        <button
+                            onClick={() => setShowModeWarning(false)}
+                            className="px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-md font-semibold"
+                        >
+                            Got it
+                        </button>
+                    </div>
+                </div>
+            )}
+
 
             <footer className="absolute bottom-0 w-full py-4 text-center text-white bg-black bg-opacity-50 z-10">
                 <p>Created by: Syd-Grp18 | Members: Varun, Suresh, Vinay and Vikram</p>
