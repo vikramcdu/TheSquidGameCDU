@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/TheSquidGameCDU/static/css/main.23f5e201.css",
-    "main.js": "/TheSquidGameCDU/static/js/main.89f7977b.js",
+    "main.css": "/TheSquidGameCDU/static/css/main.8639839c.css",
+    "main.js": "/TheSquidGameCDU/static/js/main.9fc457a7.js",
     "static/js/453.99fd72ed.chunk.js": "/TheSquidGameCDU/static/js/453.99fd72ed.chunk.js",
     "static/media/squid_game_doll.glb": "/TheSquidGameCDU/static/media/squid_game_doll.e4f5051c80ae6b027149.glb",
     "static/media/NewBackground.png": "/TheSquidGameCDU/static/media/NewBackground.f20720998bc0a97f13ba.png",
     "static/media/Logo.webp": "/TheSquidGameCDU/static/media/Logo.e555c633f0a5e00b95ad.webp",
     "static/media/SquidGamePeople.webp": "/TheSquidGameCDU/static/media/SquidGamePeople.d684e29b0a8d21685404.webp",
     "index.html": "/TheSquidGameCDU/index.html",
-    "main.23f5e201.css.map": "/TheSquidGameCDU/static/css/main.23f5e201.css.map",
-    "main.89f7977b.js.map": "/TheSquidGameCDU/static/js/main.89f7977b.js.map",
+    "main.8639839c.css.map": "/TheSquidGameCDU/static/css/main.8639839c.css.map",
+    "main.9fc457a7.js.map": "/TheSquidGameCDU/static/js/main.9fc457a7.js.map",
     "453.99fd72ed.chunk.js.map": "/TheSquidGameCDU/static/js/453.99fd72ed.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.23f5e201.css",
-    "static/js/main.89f7977b.js"
+    "static/css/main.8639839c.css",
+    "static/js/main.9fc457a7.js"
   ]
 }
