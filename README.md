@@ -1,3 +1,6 @@
+You can access the link that is hosted on Github Pages at : [Click Here](https://vikramcdu.github.io/TheSquidGameCDU/)! 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
