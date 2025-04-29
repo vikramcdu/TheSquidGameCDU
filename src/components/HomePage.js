@@ -36,8 +36,14 @@ export default function HomePage() {
             setShowModeWarning(true);
             return;
         }
-
-        navigate('/game');
+        else if(mode === 'Single Player') {
+            navigate('/SinglePlayerRedLightGreenLight');
+            return;
+        }
+        else if(mode === 'Multi Player') {
+            navigate('/LoadingOverlay');
+            return;
+        }
     };
 
     if (isLoading) {
